@@ -1,11 +1,9 @@
+// import
 const { Schema, model } = require('mongoose');
 
+// model
 const dwellingSchema = new Schema({
     title: {
-        type: String,
-        require: true
-    },
-    country: {
         type: String,
         require: true
     },
@@ -13,9 +11,21 @@ const dwellingSchema = new Schema({
         type: String,
         require: true
     },
+    city: {
+        type: String,
+        require: true
+    },
+    zipCode: {
+        type: String,
+        require: true
+    },
+    country: {
+        type: String,
+        require: true
+    },
     type: {
         type: String,
-        enum: ["romance", "fiction", "biography", "poetry"]
+        enum: ["House", "Apartment", "Villa", "Condominium", "Townhouse", "Cottage", "Bungalow", "Duplex", "Penthouse", "Loft", "Mobile Home", "Mansion", "Studio Apartment", "Chalet", "Farmhouse"]
     },
     maxPersonNumber: {
         type: Number,
@@ -33,16 +43,14 @@ const dwellingSchema = new Schema({
         },
         rate: { type : Number, min: 1, max : 5}
     }],
+    rating: [String],
     author: {
         type: String,
         required: true
-    },
-    author: {
-        type: Schema.Types.ObjectId,
-        ref: "User"
     }
 });
 
 const Dwelling = model("Dwelling", dwellingSchema);
 
+// export
 module.exports = Dwelling;

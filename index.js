@@ -1,23 +1,20 @@
-//imports
+//import
 const express = require('express');
 const mongoose = require("mongoose");
-const { isAuthenticated } = require("./middleware/jwt.middleware");
 const cors = require('cors');
 
-//models
-const Dwelling = require("./models/Dwelling.model");
-const User = require("./models/User.model");
-
-//express instance configuration
+// instance
 const app = express();
+
+// express middleware
 app.use(express.json());
 app.use(cors());
 
-//routes
+// route
 app.use("/auth", require("./routes/auth.routes"));
 app.use("/dwelling", require("./routes/dwelling.routes"));
 
-//connections
+// connection
 app.listen(3000, () => console.log("App listening on port 3000"));
 
 mongoose

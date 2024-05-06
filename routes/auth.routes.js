@@ -1,16 +1,23 @@
-//imports
+// import
 const express = require("express");
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
-const User = require("../models/User.model");
 const dotenv = require("dotenv");
 const { isAuthenticated } = require("../middleware/jwt.middleware");
+const User = require("../models/User.model");
 
+// module config
 dotenv.config();
+
+// instance
 const router = express.Router();
+
+// constance
 const saltRounds = 10;
 
-// POST  /auth/signup
+// route
+
+// POST /auth/signup
 router.post('/signup', (req, res) => {
     const { username, password } = req.body;
 
@@ -43,7 +50,7 @@ router.post('/signup', (req, res) => {
         });
 });
 
-// POST  /auth/login
+// POST /auth/login
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
 
@@ -79,9 +86,11 @@ router.post('/login', (req, res) => {
         });
 });
 
-// GET  /auth/verify
+// GET /auth/verify
 router.get('/verify', isAuthenticated, (req, res, next) => {
     res.status(200).json(req.payload);
 });
 
+
+// export
 module.exports = router;

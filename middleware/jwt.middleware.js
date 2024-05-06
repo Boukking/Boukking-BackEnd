@@ -1,3 +1,4 @@
+// import
 const jwt = require("jsonwebtoken");
 
 const isAuthenticated = (req, res, next) => {
@@ -15,4 +16,5 @@ const isAuthenticated = (req, res, next) => {
     }
 }
 
+// export
 module.exports = { isAuthenticated };

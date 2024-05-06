@@ -1,5 +1,7 @@
+// import
 const { Schema, model } = require('mongoose');
 
+// model
 const userSchema = new Schema({
     username: {
         type: String,
@@ -20,4 +22,5 @@ const userSchema = new Schema({
 
 const User = model("User", userSchema);
 
+// export
 module.exports = User;
