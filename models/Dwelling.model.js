@@ -7,6 +7,9 @@ const dwellingSchema = new Schema({
         type: String,
         require: true
     },
+    description: {
+        type: String,
+    },
     adress: {
         type: String,
         require: true
@@ -43,7 +46,7 @@ const dwellingSchema = new Schema({
         },
         rate: { type : Number, min: 1, max : 5}
     }],
-    rating: [String],
+    image: [String],
     author: {
         type: String,
         required: true
