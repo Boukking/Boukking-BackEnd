@@ -3,6 +3,7 @@ const express = require("express");
 const Dwelling = require("../models/Dwelling.model");
 const fileUploader = require("../cloudinary/cloudinary.config");
 const { isAuthenticated } = require("../middleware/jwt.middleware");
+const { isDwellingOwner } = require("../middleware/isDwellingOwner.middleware");
 
 // instance
 const router = express.Router();
@@ -17,11 +18,12 @@ router.get('/', (req, res) => {
 // GET /dwelling/:_id
 router.get('/:id', (req, res) => {
     const dwellingId = req.params.id;
-    Dwelling.find()
+    Dwelling.find({_id: dwellingId})
         .then((dwelling) => {
             res.status(201).json(dwelling);
         })
         .catch(err => {
+            console.log(err)
             res.status(500).json({ message: "Internal Server Error" });
         });
 });
@@ -50,7 +52,7 @@ router.post("/img", isAuthenticated, fileUploader.single("imageUrl"), (req, res,
 });
 
 // PUT /dwelling/:id
-router.put("/:id", isAuthenticated, (req, res, next) => {
+router.put("/:id", isAuthenticated, isDwellingOwner, (req, res, next) => {
     const dwellingId = req.params.id;
     const { title, type, maxPersonNumber, adress, city, zip, country, image } = req.body;
 
@@ -71,9 +73,9 @@ router.put("/:id", isAuthenticated, (req, res, next) => {
 
     Dwelling.findByIdAndUpdate(dwellingId, modifiedDwelling, { new: true })
         .then((updatedDwelling) => {
-            res.status(204).json(updatedDwelling);
+            res.status(204).json({updatedDwelling});
         })
-        .catch((error) => {
+        .catch(() => {
             res.status(500).json({ message: "Failed to update the dwelling" });
         });
 });
