@@ -48,7 +48,8 @@ const dwellingSchema = new Schema({
     }],
     image: [String],
     author: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     }
 });

@@ -13,6 +13,7 @@ app.use(cors());
 // route
 app.use("/auth", require("./routes/auth.routes"));
 app.use("/dwelling", require("./routes/dwelling.routes"));
+app.use("/user", require("./routes/user.routes"));
 
 // connection
 app.listen(3000, () => console.log("App listening on port 3000"));
