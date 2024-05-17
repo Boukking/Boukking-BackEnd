@@ -12,7 +12,13 @@ const router = express.Router();
 
 // GET /dwelling
 router.get('/', (req, res) => {
-    res.json({ toto: "toto" });
+    Dwelling.find()
+        .then((dwelling) => {
+            res.status(200).json(dwelling);
+        })
+        .catch(err => {
+            res.status(500).json({ message: "Internal Server Error" });
+        });
 });
 
 // GET /dwelling/:_id
@@ -29,7 +35,6 @@ router.get('/:id', (req, res) => {
             }
         })
         .catch(err => {
-            console.log(err)
             res.status(500).json({ message: "Internal Server Error" });
         });
 });
@@ -37,7 +42,7 @@ router.get('/:id', (req, res) => {
 // POST /dwelling
 router.post("/", isAuthenticated, (req, res) => {
     const { title, description, type, maxPersonNumber, adress, city, zipCode, country } = req.body;
-    
+
     if (!title || !type || !maxPersonNumber || !adress || !city || !zipCode || !country) return res.status(400).json({ message: "Fields are missing" });
     if (isNaN(Number(maxPersonNumber))) return res.status(400).json({ message: "Max. number of persons need to be a number" });
     if (!["House", "Apartment", "Villa", "Condominium", "Townhouse", "Cottage", "Bungalow", "Duplex", "Penthouse", "Loft", "Mobile Home", "Mansion", "Studio Apartment", "Chalet", "Farmhouse"].includes(type)) return res.status(400).json({ message: "Type is invalid" });
@@ -65,7 +70,7 @@ router.put("/:id", isAuthenticated, isDwellingOwner, (req, res, next) => {
     if (maxPersonNumber && isNaN(Number(maxPersonNumber))) return res.status(400).json({ message: "Max. number of persons need to be a number" });
     if (image && typeof image !== "object") return res.status(400).json({ message: "Images must be in a list" });
     if (type && !["House", "Apartment", "Villa", "Condominium", "Townhouse", "Cottage", "Bungalow", "Duplex", "Penthouse", "Loft", "Mobile Home", "Mansion", "Studio Apartment", "Chalet", "Farmhouse"].includes(type)) return res.status(400).json({ message: "Type is invalid" });
-    
+
     const modifiedDwelling = {};
     if (title) modifiedDwelling.title = title;
     if (description) modifiedDwelling.description = description;
@@ -79,7 +84,7 @@ router.put("/:id", isAuthenticated, isDwellingOwner, (req, res, next) => {
 
     Dwelling.findByIdAndUpdate(dwellingId, modifiedDwelling, { new: true })
         .then((updatedDwelling) => {
-            res.status(204).json({updatedDwelling});
+            res.status(204).json({ updatedDwelling });
         })
         .catch(() => {
             res.status(500).json({ message: "Failed to update the dwelling" });
