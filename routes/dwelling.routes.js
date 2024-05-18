@@ -91,5 +91,18 @@ router.put("/:id", isAuthenticated, isDwellingOwner, (req, res, next) => {
         });
 });
 
+// DELETE /dwelling/:id
+router.delete("/:id", isAuthenticated, isDwellingOwner, (req, res, next) => {
+    const dwellingId = req.params.id;
+    Dwelling.findByIdAndDelete(dwellingId)
+        .then(() => {
+            res.status(204).send();
+        })
+        .catch((err) => {
+            console.log(err)
+            res.status(500).json({ message: "Failed to delete the dwelling" });
+        });
+});
+
 // export
 module.exports = router;
