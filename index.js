@@ -19,6 +19,6 @@ app.use("/user", require("./routes/user.routes"));
 app.listen(3000, () => console.log("App listening on port 3000"));
 
 mongoose
-    .connect("mongodb://127.0.0.1:27017/Boukking")
+    .connect(process.env.DB_URL)
     .then(x => console.log(`Connected to MongoDB, Database name: "${x.connections[0].name}"`))
     .catch(err => console.error("Error connecting to mongoDB", err));
