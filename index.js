@@ -16,7 +16,7 @@ app.use("/dwelling", require("./routes/dwelling.routes"));
 app.use("/user", require("./routes/user.routes"));
 
 // connection
-app.listen(3000, () => console.log("App listening on port 3000"));
+app.listen(process.env.PORT, () => console.log("App listening on port 3000"));
 
 mongoose
     .connect(process.env.DB_URL)
