@@ -8,7 +8,9 @@ const app = express();
 
 // express middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: "https://boukking-backend.adaptable.app"
+}));
 
 // route
 app.use("/auth", require("./routes/auth.routes"));
