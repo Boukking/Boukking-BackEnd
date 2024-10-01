@@ -9,7 +9,7 @@ const app = express();
 // express middleware
 app.use(express.json());
 app.use(cors({
-    origin: "https://boukking-backend.adaptable.app"
+    origin: "https://boukking.netlify.app"
 }));
 
 // route
